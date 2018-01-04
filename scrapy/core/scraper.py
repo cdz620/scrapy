@@ -232,6 +232,7 @@ class Scraper(object):
                 logger.error('Error processing %(item)s', {'item': item},
                              exc_info=failure_to_exc_info(output),
                              extra={'spider': spider})
+                self.crawler.stats.inc_value('pipeline_exceptions/%s' % ex.__class__.__name__)
         else:
             logkws = self.logformatter.scraped(output, response, spider)
             logger.log(*logformatter_adapter(logkws), extra={'spider': spider})
